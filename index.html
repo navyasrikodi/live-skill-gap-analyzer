@@ -1,0 +1,463 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Live Skill-Gap Analyzer</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <h1>Live Skill-Gap Analyzer</h1>
+  <p class="sub">Compare your resume with the skills employers ask for.</p>
+
+  <form method="post"
+        action="/analyze"
+        id="analyze-form"
+        enctype="multipart/form-data">
+
+    <label for="resume_file">Upload Resume (PDF, DOCX, or TXT)</label>
+    <input
+      type="file"
+      id="resume_file"
+      name="resume_file"
+      accept=".pdf,.docx,.txt"
+    >
+
+    <p class="small">
+      Upload your resume or paste the resume text below.
+      If both are provided, the uploaded file will be used.
+      Maximum file size: 5 MB.
+    </p>
+
+    <label for="resume">Resume Text</label>
+    <textarea
+      id="resume"
+      name="resume"
+      placeholder="Paste your resume text here..."
+    >{{ form.resume }}</textarea>
+
+    <div class="row">
+      <div>
+        <label for="target_role">Target Role</label>
+        <input
+          id="target_role"
+          name="target_role"
+          value="{{ form.target_role }}"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="city">City</label>
+        <input
+          id="city"
+          name="city"
+          value="{{ form.city }}"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="hours_per_week">Hours Per Week</label>
+        <input
+          id="hours_per_week"
+          name="hours_per_week"
+          type="number"
+          min="1"
+          max="80"
+          value="{{ form.hours_per_week }}"
+          required
+        >
+      </div>
+    </div>
+
+    <button type="submit" id="analyze-btn">Analyze</button>
+  </form>
+
+  <div id="output">
+    {% if errors %}
+      <div class="error">
+        <strong>Please fix this:</strong>
+        <ul>
+          {% for e in errors %}
+            <li>{{ e }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+
+    {% if result and result.status == "needs_confirmation" %}
+      <div class="ask">
+        <strong>I need your decision before going further.</strong>
+        <p>{{ result.message }}</p>
+        <p class="small">
+          Nothing was widened and nothing was saved.
+          Change the city or role and analyze again.
+        </p>
+      </div>
+    {% endif %}
+
+    {% if result and result.status == "ok" %}
+      <p class="small">
+        Input record #{{ result.input_id }}.
+        {{ result.matched_count }} postings matched,
+        {{ result.postings_found }} unique after removing duplicates.
+      </p>
+
+      <h2>Skill Frequency</h2>
+      <p class="small">
+        Click a bar or row to see which postings require that skill.
+      </p>
+
+      <div class="legend">
+        <span><i class="dot" style="background:#f43f5e"></i>Gap</span>
+        <span><i class="dot" style="background:#10b981"></i>Covered</span>
+        <span><i class="dot" style="background:#f59e0b"></i>Uncertain</span>
+      </div>
+
+      <div class="chart-box" id="chart-box">
+        <canvas id="skillChart"></canvas>
+      </div>
+
+      <div id="panel">
+        <button class="close" type="button" onclick="closePanel()">Close</button>
+        <h3 id="panel-title"></h3>
+        <input id="panel-search" placeholder="Search these postings..." oninput="filterPanel()">
+        <ul id="panel-list"></ul>
+      </div>
+
+      <table id="freq-table">
+        <tr>
+          <th>Skill</th>
+          <th>Postings</th>
+          <th>Example Postings</th>
+        </tr>
+
+        {% for skill, info in result.skill_counts.items() %}
+          <tr class="clickable"
+              data-skill="{{ skill }}"
+              onclick="showSkill(this.dataset.skill)">
+            <td>{{ skill }}</td>
+            <td>{{ info.count }}</td>
+            <td class="ids">
+              {% for pid in info.posting_ids[:5] %}
+                <a href="/job/{{ pid }}"
+                   target="_blank"
+                   onclick="event.stopPropagation()">{{ pid }}</a>
+              {% endfor %}
+
+              {% if info.posting_ids|length > 5 %}
+                <span class="small">
+                  +{{ info.posting_ids|length - 5 }} more
+                </span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Gaps vs Resume Evidence</h2>
+
+      <div class="filters">
+        <button type="button" class="on" onclick="filterGaps('all', this)">All</button>
+        <button type="button" onclick="filterGaps('gap', this)">Gaps</button>
+        <button type="button" onclick="filterGaps('covered', this)">Covered</button>
+      </div>
+
+      <table id="gap-table">
+        <tr>
+          <th>Skill</th>
+          <th>Postings</th>
+          <th>Status</th>
+          <th>Resume Evidence</th>
+          <th>Reason</th>
+        </tr>
+
+        {% for g in result.gaps %}
+          <tr class="clickable"
+              data-skill="{{ g.skill }}"
+              data-status="{{ g.status }}"
+              onclick="showSkill(this.dataset.skill)">
+            <td>{{ g.skill }}</td>
+            <td>{{ g.posting_count }}</td>
+            <td class="{{ g.status }}">{{ g.status }}</td>
+            <td>{{ g.evidence or "-" }}</td>
+            <td>{{ g.reason }}</td>
+          </tr>
+        {% endfor %}
+      </table>
+
+      <h2>Proposed Action (Needs Your Approval)</h2>
+
+      {% if result.proposal['items'] %}
+        <div class="ask">
+          <p>
+            <strong>
+              Save free resources for your top
+              {{ result.proposal['items']|length }} gaps
+            </strong>
+            to <code>{{ result.proposal.destination }}</code>?
+          </p>
+
+          <table>
+            <tr>
+              <th>Gap</th>
+              <th>Postings</th>
+              <th>Free Resource</th>
+            </tr>
+
+            {% for item in result.proposal['items'] %}
+              <tr>
+                <td>{{ item.skill }}</td>
+                <td>{{ item.postings }}</td>
+                <td>
+                  <a href="{{ item.url }}" target="_blank">
+                    {{ item.title }}
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </table>
+
+          <p class="small">
+            Nothing is saved until you click Approve.
+            Action ID: {{ result.proposal.action_id }}
+          </p>
+
+          <form method="post"
+                action="/approve/{{ result.proposal.action_id }}"
+                style="display:inline">
+            <button type="submit">Approve and Save</button>
+          </form>
+
+          <form method="post"
+                action="/reject/{{ result.proposal.action_id }}"
+                style="display:inline">
+            <button type="submit">Reject</button>
+          </form>
+        </div>
+      {% else %}
+        <p>No gaps found, so there is nothing to propose.</p>
+      {% endif %}
+
+      {% set payload = {"chart": result.chart, "info": result.posting_info} %}
+      <script type="application/json" id="data-json">{{ payload|tojson }}</script>
+    {% endif %}
+  </div>
+
+  <script>
+    const COLORS = {
+      gap: "#f43f5e",
+      covered: "#10b981",
+      uncertain: "#f59e0b"
+    };
+
+    let CHART = [];
+    let INFO = {};
+    let chartInstance = null;
+
+    function destroyChart() {
+      if (chartInstance) {
+        chartInstance.destroy();
+        chartInstance = null;
+      }
+    }
+
+    function initResults() {
+      const dataEl = document.getElementById("data-json");
+
+      if (!dataEl) {
+        CHART = [];
+        INFO = {};
+        return;
+      }
+
+      const data = JSON.parse(dataEl.textContent);
+      CHART = data.chart;
+      INFO = data.info;
+
+      const box = document.getElementById("chart-box");
+
+      if (typeof Chart === "undefined") {
+        box.innerHTML =
+          '<p class="small">Chart could not load. The tables below still work.</p>';
+        return;
+      }
+
+      box.style.height = (CHART.length * 32 + 60) + "px";
+      Chart.defaults.font.family = "Inter, sans-serif";
+
+      chartInstance = new Chart(document.getElementById("skillChart"), {
+        type: "bar",
+        data: {
+          labels: CHART.map(r => r.skill),
+          datasets: [{
+            label: "Postings",
+            borderRadius: 6,
+            data: CHART.map(r => r.count),
+            backgroundColor: CHART.map(
+              r => COLORS[r.status] || "#888"
+            )
+          }]
+        },
+        options: {
+          indexAxis: "y",
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false }
+          },
+          onClick: (evt, els) => {
+            if (els.length) {
+              showSkill(CHART[els[0].index].skill);
+            }
+          },
+          onHover: (evt, els) => {
+            evt.native.target.style.cursor =
+              els.length ? "pointer" : "default";
+          }
+        }
+      });
+    }
+
+    function showSkill(skill) {
+      const row = CHART.find(r => r.skill === skill);
+      if (!row) return;
+
+      document.getElementById("panel-title").textContent =
+        skill + ": " + row.count + " postings (" + row.status + ")";
+
+      const list = document.getElementById("panel-list");
+      list.innerHTML = "";
+
+      row.ids.forEach(id => {
+        const p = INFO[id];
+        if (!p) return;
+
+        const li = document.createElement("li");
+        const a = document.createElement("a");
+
+        a.href = p.url;
+        a.target = "_blank";
+        a.textContent = id;
+
+        li.appendChild(a);
+        li.appendChild(document.createTextNode(
+          " " + p.title + " at " + p.company + " (" + p.source + ")"
+        ));
+
+        li.dataset.text = (
+          id + " " + p.title + " " + p.company + " " + p.source
+        ).toLowerCase();
+
+        list.appendChild(li);
+      });
+
+      document.getElementById("panel-search").value = "";
+      document.getElementById("panel").style.display = "block";
+
+      document.querySelectorAll("tr.clickable").forEach(tr => {
+        tr.classList.toggle("active", tr.dataset.skill === skill);
+      });
+
+      document.getElementById("panel").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    }
+
+    function closePanel() {
+      document.getElementById("panel").style.display = "none";
+      document.querySelectorAll("tr.clickable").forEach(tr => {
+        tr.classList.remove("active");
+      });
+    }
+
+    function filterPanel() {
+      const q = document.getElementById("panel-search").value.toLowerCase();
+
+      document.querySelectorAll("#panel-list li").forEach(li => {
+        li.style.display = li.dataset.text.includes(q) ? "" : "none";
+      });
+    }
+
+    function filterGaps(status, btn) {
+      document.querySelectorAll(".filters button").forEach(b => {
+        b.classList.remove("on");
+      });
+
+      btn.classList.add("on");
+
+      document.querySelectorAll("#gap-table tr[data-status]").forEach(tr => {
+        tr.style.display =
+          (status === "all" || tr.dataset.status === status) ? "" : "none";
+      });
+    }
+
+    document.getElementById("analyze-form").addEventListener(
+      "submit",
+      async function (e) {
+        e.preventDefault();
+
+        const btn = document.getElementById("analyze-btn");
+        const out = document.getElementById("output");
+
+        btn.disabled = true;
+        btn.textContent = "Analyzing...";
+        out.style.opacity = 0.4;
+
+        try {
+          const resp = await fetch("/analyze", {
+            method: "POST",
+            body: new FormData(this)
+          });
+
+          if (!resp.ok) {
+            throw new Error("Server returned " + resp.status);
+          }
+
+          const html = await resp.text();
+          const doc = new DOMParser().parseFromString(html, "text/html");
+          const fresh = doc.getElementById("output");
+
+          if (!fresh) {
+            throw new Error("Unexpected response from the server");
+          }
+
+          destroyChart();
+          out.innerHTML = fresh.innerHTML;
+          initResults();
+
+          out.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+          });
+        } catch (err) {
+          destroyChart();
+          out.innerHTML = "";
+
+          const box = document.createElement("div");
+          box.className = "error";
+          box.textContent = "Analysis failed: " + err.message;
+
+          out.appendChild(box);
+        } finally {
+          out.style.opacity = 1;
+          btn.disabled = false;
+          btn.textContent = "Analyze";
+        }
+      }
+    );
+
+    initResults();
+  </script>
+</body>
+</html>

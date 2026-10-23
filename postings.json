@@ -1,0 +1,290 @@
+[
+  {
+    "id": "J001",
+    "title": "Junior Data Analyst",
+    "company": "Zenith Analytics",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J001",
+    "description": "Zenith Analytics is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Python, Tableau, ETL, Machine Learning."
+  },
+  {
+    "id": "J002",
+    "title": "Senior Data Analyst",
+    "company": "BlueRiver Tech",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J002",
+    "description": "BlueRiver Tech is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Excel, PowerBI, Statistics, R, Machine Learning."
+  },
+  {
+    "id": "J003",
+    "title": "Data Analyst",
+    "company": "Orchid Software",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J003",
+    "description": "Orchid Software is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Data Visualization, Machine Learning."
+  },
+  {
+    "id": "J004",
+    "title": "Data Analyst",
+    "company": "Nimbus Labs",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J004",
+    "description": "Nimbus Labs is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: MySQL, Microsoft Excel, Python, Tableau, Power BI."
+  },
+  {
+    "id": "J005",
+    "title": "Junior Data Analyst",
+    "company": "Kestrel Systems",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J005",
+    "description": "Kestrel Systems is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: MySQL, Excel, Python, Tableau, Power BI."
+  },
+  {
+    "id": "J006",
+    "title": "Senior Data Analyst",
+    "company": "Lumen Retail",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J006",
+    "description": "Lumen Retail is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, ETL."
+  },
+  {
+    "id": "J007",
+    "title": "Data Analyst",
+    "company": "Atlas Logistics",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J007",
+    "description": "Atlas Logistics is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Excel, Python, PowerBI, R."
+  },
+  {
+    "id": "J008",
+    "title": "Data Analyst",
+    "company": "Pioneer Health",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J008",
+    "description": "Pioneer Health is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Tableau, Statistics."
+  },
+  {
+    "id": "J009",
+    "title": "Junior Data Analyst",
+    "company": "Crestline Finance",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J009",
+    "description": "Crestline Finance is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Tableau, Power BI, Statistics, Looker."
+  },
+  {
+    "id": "J010",
+    "title": "Senior Data Analyst",
+    "company": "Vertex Mobility",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J010",
+    "description": "Vertex Mobility is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Python."
+  },
+  {
+    "id": "J011",
+    "title": "Data Analyst",
+    "company": "Harbor Insurance",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J011",
+    "description": "Harbor Insurance is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Microsoft Excel, Python, Tableau, PowerBI, ETL, Machine Learning, Looker."
+  },
+  {
+    "id": "J012",
+    "title": "Data Analyst",
+    "company": "Solstice Energy",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J012",
+    "description": "Solstice Energy is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Tableau, Data Visualization."
+  },
+  {
+    "id": "J013",
+    "title": "Junior Data Analyst",
+    "company": "Meridian Foods",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J013",
+    "description": "Meridian Foods is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Tableau, Statistics, Data Visualization, Machine Learning."
+  },
+  {
+    "id": "J014",
+    "title": "Senior Data Analyst",
+    "company": "Quartz Media",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J014",
+    "description": "Quartz Media is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: MySQL, Excel, Power BI, Statistics."
+  },
+  {
+    "id": "J015",
+    "title": "Data Analyst",
+    "company": "Falcon Telecom",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J015",
+    "description": "Falcon Telecom is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Tableau, Power BI, Statistics, Machine Learning."
+  },
+  {
+    "id": "J016",
+    "title": "Data Analyst",
+    "company": "Ironwood Steel",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J016",
+    "description": "Ironwood Steel is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: Microsoft Excel, Python, Tableau, PowerBI."
+  },
+  {
+    "id": "J017",
+    "title": "Junior Data Analyst",
+    "company": "Willow Education",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J017",
+    "description": "Willow Education is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Tableau, Data Visualization, Machine Learning."
+  },
+  {
+    "id": "J018",
+    "title": "Senior Data Analyst",
+    "company": "Ember Games",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J018",
+    "description": "Ember Games is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Data Visualization."
+  },
+  {
+    "id": "J019",
+    "title": "Data Analyst",
+    "company": "Summit Pharma",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J019",
+    "description": "Summit Pharma is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Python, Tableau, Data Visualization."
+  },
+  {
+    "id": "J020",
+    "title": "Data Analyst",
+    "company": "Cobalt Banking",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J020",
+    "description": "Cobalt Banking is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Tableau, ETL, R."
+  },
+  {
+    "id": "J021",
+    "title": "Junior Data Analyst",
+    "company": "Tidal Shipping",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J021",
+    "description": "Tidal Shipping is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Power BI."
+  },
+  {
+    "id": "J022",
+    "title": "Senior Data Analyst",
+    "company": "Aurora Travel",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J022",
+    "description": "Aurora Travel is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: Tableau, Statistics."
+  },
+  {
+    "id": "J023",
+    "title": "Data Analyst",
+    "company": "Granite Builders",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J023",
+    "description": "Granite Builders is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Statistics, R."
+  },
+  {
+    "id": "J024",
+    "title": "Data Analyst",
+    "company": "Pixel Commerce",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J024",
+    "description": "Pixel Commerce is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Python, Tableau, Statistics, R."
+  },
+  {
+    "id": "J025",
+    "title": "Junior Data Analyst",
+    "company": "Sapphire Auto",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J025",
+    "description": "Sapphire Auto is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Microsoft Excel, Python, Machine Learning."
+  },
+  {
+    "id": "J026",
+    "title": "Senior Data Analyst",
+    "company": "Redwood Textiles",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J026",
+    "description": "Redwood Textiles is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: MySQL, Excel, Python, Statistics."
+  },
+  {
+    "id": "J027",
+    "title": "Data Analyst",
+    "company": "Nova Payments",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J027",
+    "description": "Nova Payments is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Python, Tableau."
+  },
+  {
+    "id": "J028",
+    "title": "Data Analyst",
+    "company": "Cedar Hotels",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J028",
+    "description": "Cedar Hotels is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Tableau, PowerBI, Statistics, Data Visualization, Machine Learning."
+  },
+  {
+    "id": "J029",
+    "title": "Junior Data Analyst",
+    "company": "Maple Agritech",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J029",
+    "description": "Maple Agritech is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, PowerBI."
+  },
+  {
+    "id": "J030",
+    "title": "Senior Data Analyst",
+    "company": "Echo Telehealth",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J030",
+    "description": "Echo Telehealth is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: MySQL, Python."
+  },
+  {
+    "id": "J031",
+    "title": "Junior Data Analyst",
+    "company": "Zenith Analytics",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J031",
+    "description": "Zenith Analytics is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Python, Tableau, ETL, Machine Learning."
+  },
+  {
+    "id": "J032",
+    "title": "Junior Data Analyst",
+    "company": "Zenith Analytics",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J032",
+    "description": "Zenith Analytics is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Python, Tableau, ETL, Machine Learning."
+  }
+]

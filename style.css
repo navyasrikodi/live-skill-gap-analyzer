@@ -1,0 +1,483 @@
+
+:root {
+  --violet: #a78bfa;
+  --blue: #60a5fa;
+  --pink: #f472b6;
+  --ink: #f1f5f9;
+  --muted: #a1a1aa;
+  --line: #343449;
+  --bg: #0b0b12;
+  --card: #161622;
+  --input: #10101a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", Arial, sans-serif;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 32px 16px 60px;
+  color: var(--ink);
+  line-height: 1.5;
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+h1 {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 2.3rem;
+  margin: 0 0 4px;
+  background: linear-gradient(90deg, var(--violet), var(--blue), var(--pink));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h2 {
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 1.25rem;
+  margin: 32px 0 6px;
+  padding-left: 12px;
+  border-left: 5px solid var(--violet);
+}
+
+h3 {
+  color: var(--violet);
+}
+
+p, li, strong {
+  color: var(--ink);
+}
+
+.sub, .small {
+  color: var(--muted);
+}
+
+.small {
+  font-size: 0.82rem;
+}
+
+a {
+  color: var(--blue);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--pink);
+  text-decoration: underline;
+}
+
+code {
+  font-family: "JetBrains Mono", Consolas, monospace;
+  background: #25243a;
+  color: #c4b5fd;
+  padding: 2px 6px;
+  border-radius: 6px;
+  font-size: 0.85em;
+}
+
+/* Form */
+#analyze-form {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 20px 22px 24px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #c4b5fd;
+}
+
+textarea, input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 4px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--ink);
+  background: var(--input);
+  border: 1.5px solid var(--line);
+  border-radius: 10px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+  border-color: var(--violet);
+  box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.18);
+}
+
+.row {
+  display: flex;
+  gap: 14px;
+}
+
+.row > div {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Buttons */
+button {
+  margin-top: 16px;
+  padding: 11px 26px;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.25);
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+
+button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(124, 58, 237, 0.35);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+form[action^="/reject"] button {
+  background: linear-gradient(90deg, #e11d48, #ea580c);
+}
+
+button[style*="background:#fff"] {
+  background: #252536 !important;
+  color: var(--ink) !important;
+  border: 1px solid var(--line) !important;
+  box-shadow: none;
+}
+
+.filters button {
+  margin-top: 0;
+  margin-right: 6px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  background: var(--card);
+  color: var(--violet);
+  border: 1.5px solid var(--violet);
+  box-shadow: none;
+}
+
+.filters button.on {
+  background: var(--violet);
+  color: #111;
+}
+
+.close {
+  float: right;
+  margin: 0;
+  padding: 4px 14px;
+  font-size: 0.8rem;
+  background: #252536;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  box-shadow: none;
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin-top: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+th {
+  background: linear-gradient(90deg, #5b21b6, #1d4ed8);
+  color: #fff;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-align: left;
+  padding: 10px 12px;
+}
+
+td {
+  padding: 9px 12px;
+  border-top: 1px solid var(--line);
+  vertical-align: top;
+  color: var(--ink);
+  background: var(--card);
+}
+
+tr:nth-child(even) td {
+  background: #1c1c2b;
+}
+
+tr.clickable {
+  cursor: pointer;
+}
+
+tr.clickable:hover td {
+  background: #29243f;
+}
+
+tr.active td {
+  background: #342858 !important;
+}
+
+tr.checking td {
+  background: #3a3020 !important;
+}
+
+td.gap {
+  color: #fda4af;
+  background: #3b1725 !important;
+  font-weight: 700;
+}
+
+td.covered {
+  color: #6ee7b7;
+  background: #10352c !important;
+  font-weight: 700;
+}
+
+td.uncertain {
+  color: #fcd34d;
+  background: #3b3015 !important;
+  font-weight: 700;
+}
+
+.live {
+  color: #4ade80;
+  font-weight: 700;
+}
+
+.dead {
+  color: #fb7185;
+  font-weight: 700;
+}
+
+.pending {
+  color: #fbbf24;
+  font-weight: 700;
+}
+
+.ids a {
+  margin-right: 6px;
+  font-family: "JetBrains Mono", Consolas, monospace;
+  font-size: 0.8rem;
+}
+
+/* Messages */
+.error {
+  background: #301720;
+  border: 1px solid #713044;
+  border-left: 5px solid #f43f5e;
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-top: 18px;
+}
+
+.ask {
+  background: #211d30;
+  border: 1px solid #493568;
+  border-left: 5px solid #a78bfa;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 18px;
+}
+
+.note {
+  background: #1e2340;
+  border: 1px solid #3b4275;
+  border-left: 5px solid var(--violet);
+  border-radius: 12px;
+  padding: 10px 14px;
+  margin: 16px 0;
+}
+
+/* Chart and details panel */
+.chart-box {
+  position: relative;
+  margin-top: 10px;
+  padding: 12px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+}
+
+.legend span {
+  display: inline-block;
+  margin-right: 16px;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.dot {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+#panel {
+  display: none;
+  background: #191729;
+  border: 1px solid #493568;
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-top: 16px;
+}
+
+#panel h3 {
+  margin: 0 0 8px;
+  font-family: "Poppins", "Segoe UI", sans-serif;
+  font-size: 1.05rem;
+  color: var(--violet);
+}
+
+#panel input {
+  width: 280px;
+  max-width: 100%;
+}
+
+#panel ul {
+  max-height: 240px;
+  overflow-y: auto;
+  padding-left: 18px;
+  margin: 10px 0 0;
+}
+
+#panel li {
+  margin-bottom: 4px;
+}
+
+/* Action page */
+.bar {
+  background: #29293d;
+  height: 14px;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+#bar-fill {
+  background: linear-gradient(90deg, #a78bfa, #60a5fa, #f472b6);
+  height: 100%;
+  width: 0%;
+  transition: width 0.15s;
+}
+
+.scroll {
+  max-height: 420px;
+  overflow-y: auto;
+  margin-top: 10px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.scroll table {
+  margin-top: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.scroll th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.actions button {
+  margin-top: 0;
+}
+
+.actions form {
+  display: inline;
+}
+
+/* Motion */
+#output {
+  transition: opacity 0.15s;
+}
+
+#output > * {
+  animation: rise 0.35s ease both;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .row {
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+}
+/* Add these rules at the end of your existing static/style.css */
+input[type="file"] {
+  cursor: pointer;
+  padding: 12px;
+  border: 1.5px dashed var(--violet);
+  background: var(--input);
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(90deg, #7c3aed, #2563eb);
+}
+
+input[type="file"]::file-selector-button:hover {
+  opacity: 0.9;
+}

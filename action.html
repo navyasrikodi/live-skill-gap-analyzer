@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Action result</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body data-action="{{ action_id }}">
+  <h1>Action result</h1>
+  <p><a href="/">&larr; Back to analyzer</a></p>
+
+  {% if message %}<div class="note">{{ message }}</div>{% endif %}
+
+  <p>Action ID: <code>{{ action_id }}</code><br>
+     Status: <strong>{{ status }}</strong><br>
+     Destination: <code>{{ destination }}</code></p>
+
+  {% if status == "pending" %}
+    <p class="pending">Still pending. Nothing has been saved.</p>
+  {% elif status == "rejected" %}
+    <p>This proposal was rejected. Nothing was saved.</p>
+  {% elif status == "failed" %}
+    <p class="dead">The save failed. Nothing was recorded as saved.</p>
+  {% endif %}
+
+  <h2>Verification</h2>
+  <p id="summary" class="small"></p>
+  <div class="bar"><div id="bar-fill"></div></div>
+
+  <div class="actions">
+    {% if status == "executed" %}
+      <button type="button" id="verify-btn">Verify now</button>
+      <form method="post" action="/approve/{{ action_id }}" style="display:inline">
+        <button type="submit" style="background:#fff;border:1px solid #999;">Test duplicate approval</button>
+      </form>
+    {% else %}
+      <span class="small">Verification is available after the action is approved.</span>
+    {% endif %}
+  </div>
+  <p class="small">Verification is separate from the save: it requests each link again and records what it actually sees. Failures stay visible.</p>
+
+  <div class="scroll">
+    <table id="targets">
+      <tr><th style="width:90px">Type</th><th>Item</th><th style="width:300px">Status</th></tr>
+      {% for t in targets %}
+        <tr data-index="{{ loop.index0 }}"
+            data-state="{% if not t.check %}none{% elif t.check.is_live %}live{% else %}dead{% endif %}">
+          <td>{{ t.kind }}</td>
+          <td><a href="{{ t.url }}" target="_blank">{{ t.label }}</a></td>
+          <td class="status">
+            {% if not t.check %}
+              <span class="pending">not yet checked</span>
+            {% elif t.check.is_live %}
+              <span class="live">opens (status {{ t.check.status_code }})</span>
+              <span class="small">{{ t.check.checked_at }} UTC</span>
+            {% else %}
+              <span class="dead">FAILED (status {{ t.check.status_code }})</span>
+              <span class="small">{{ t.check.checked_at }} UTC</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
+  </div>
+
+  <script>
+    const ACTION = document.body.dataset.action;
+    const rows = Array.from(document.querySelectorAll("#targets tr[data-index]"));
+
+    function updateSummary(done, total) {
+      const live = rows.filter(r => r.dataset.state === "live").length;
+      const dead = rows.filter(r => r.dataset.state === "dead").length;
+      const none = rows.filter(r => r.dataset.state === "none").length;
+      document.getElementById("summary").textContent =
+        live + " live, " + dead + " failed, " + none + " not yet checked (" + rows.length + " items)";
+      if (total) {
+        document.getElementById("bar-fill").style.width = Math.round(done / total * 100) + "%";
+      } else {
+        document.getElementById("bar-fill").style.width =
+          Math.round((rows.length - none) / Math.max(rows.length, 1) * 100) + "%";
+      }
+    }
+
+    function setStatus(row, cls, text, stamp) {
+      const cell = row.querySelector(".status");
+      cell.textContent = "";
+      const main = document.createElement("span");
+      main.className = cls;
+      main.textContent = text;
+      cell.appendChild(main);
+      if (stamp) {
+        const small = document.createElement("span");
+        small.className = "small";
+        small.textContent = " " + stamp + " UTC";
+        cell.appendChild(small);
+      }
+    }
+
+    async function runVerify() {
+      const btn = document.getElementById("verify-btn");
+      btn.disabled = true;
+      btn.textContent = "Verifying...";
+      let done = 0;
+      rows.forEach(r => { r.dataset.state = "none"; });
+      updateSummary(0, rows.length);
+
+      for (const row of rows) {
+        row.classList.add("checking");
+        setStatus(row, "pending", "checking...", "");
+        row.scrollIntoView({ block: "nearest" });
+        try {
+          const resp = await fetch("/api/verify/" + ACTION + "/" + row.dataset.index, { method: "POST" });
+          const data = await resp.json();
+          if (!resp.ok) throw new Error(data.error || ("HTTP " + resp.status));
+          if (data.is_live) {
+            row.dataset.state = "live";
+            setStatus(row, "live", "opens (status " + data.status_code + ")", data.checked_at);
+          } else {
+            row.dataset.state = "dead";
+            setStatus(row, "dead", "FAILED (status " + data.status_code + ")", data.checked_at);
+          }
+        } catch (err) {
+          row.dataset.state = "dead";
+          setStatus(row, "dead", "could not check: " + err.message, "");
+        }
+        row.classList.remove("checking");
+        done++;
+        updateSummary(done, rows.length);
+      }
+      btn.disabled = false;
+      btn.textContent = "Verify again";
+    }
+
+    const verifyBtn = document.getElementById("verify-btn");
+    if (verifyBtn) verifyBtn.addEventListener("click", runVerify);
+    updateSummary(0, 0);
+  </script>
+</body>
+</html>

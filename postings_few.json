@@ -1,0 +1,29 @@
+[
+  {
+    "id": "J001",
+    "title": "Junior Data Analyst",
+    "company": "Zenith Analytics",
+    "city": "Hyderabad",
+    "source": "JobSiteB",
+    "url": "http://127.0.0.1:5000/job/J001",
+    "description": "Zenith Analytics is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Excel, Python, Tableau, ETL, Machine Learning."
+  },
+  {
+    "id": "J002",
+    "title": "Senior Data Analyst",
+    "company": "BlueRiver Tech",
+    "city": "Hyderabad",
+    "source": "JobSiteC",
+    "url": "http://127.0.0.1:5000/job/J002",
+    "description": "BlueRiver Tech is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: PostgreSQL, Excel, PowerBI, Statistics, R, Machine Learning."
+  },
+  {
+    "id": "J003",
+    "title": "Data Analyst",
+    "company": "Orchid Software",
+    "city": "Hyderabad",
+    "source": "JobSiteA",
+    "url": "http://127.0.0.1:5000/job/J003",
+    "description": "Orchid Software is hiring a Data Analyst in Hyderabad. You will clean data, build reports and present insights to the business team. Required skills: SQL, Python, Data Visualization, Machine Learning."
+  }
+]
